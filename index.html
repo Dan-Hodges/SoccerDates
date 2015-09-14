@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Calendar Test
+	</title>
+	<link rel="stylesheet" type="text/css" href="lib/bower_components/angular-material/angular-material.css">
+	<link rel="stylesheet" type="text/css" href="lib/bower_components/material-calendar/dist/angular-material-calendar.css">
+</head>
+<body ng-app="materialExample">
+
+	<div ng-controller="calendarCtrl">
+		<md-calendar flex layout layout-fill
+		  calendar-direction="direction"
+		  on-prev-month="prevMonth"
+		  on-next-month="nextMonth"
+		  on-day-click="dayClick"
+		  title-format="'MMMM y'"
+		  ng-model='selectedDate'
+		  day-format="'d'"
+		  day-label-format="'EEE'"
+		  day-label-tooltip-format="'EEEE'"
+		  day-tooltip-format="'fullDate'"
+		  day-content="setDayContent">
+		</md-calendar>
+	</div>
+	
+<script src="lib/bower_components/angular/angular.js"></script>
+<script src="lib/bower_components/angular-animate/angular-animate.js"></script>
+<script src="lib/bower_components/angular-aria/angular-aria.js"></script>
+<script src="lib/bower_components/angular-material/angular-material.js"></script>
+<script src="lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="lib/bower_components/angularfire/dist/angularfire.js"></script>
+<script src="lib/bower_components/material-calendar/dist/angular-material-calendar.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>
