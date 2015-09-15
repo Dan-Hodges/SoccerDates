@@ -17,7 +17,7 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
     $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
   };
   $scope.setDayContent = function(date) {
-    var content = [{Game: "usj", Date: "August 7th", Field: "A"}, 6, 7];
-    return "<p>" + content + "</p>";
+    // var content = [{Game: "usj", Date: "August 7th", Field: "A"}, 6, 7];
+    // return "<p>" + content + "</p>";
   };
 });
