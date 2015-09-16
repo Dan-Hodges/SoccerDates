@@ -1,12 +1,24 @@
-angular.module("materialExample", ["ngMaterial", "materialCalendar"]);
+angular.module("materialExample", ["ngMaterial", "materialCalendar", "firebase"]);
 
-angular.module("materialExample").controller("calendarCtrl", function($scope, $filter) {
+angular.module("materialExample").controller("calendarCtrl", function($scope, $firebaseObject, $filter) {
+  var ref = new Firebase("https://soccerdates.firebaseio.com/");
+  $scope.data = $firebaseObject(ref);
+
+$scope.data.$loaded()
+  .then(function() {
+    $scope.games = $scope.data.TCA.schedule;
+    console.log("TCA Games :", $scope.games);
+  })
+  .catch(function(err) {
+    console.error(err);
+  });
+
+
   $scope.selectedDate = null;
   $scope.setDirection = function(direction) {
     $scope.direction = direction;
   };
   $scope.selectedDate;
-  console.log("$scope", $scope);
   $scope.dayClick = function(date) {
     $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
   };
@@ -16,8 +28,10 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
   $scope.nextMonth = function(data) {
     $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
   };
-  $scope.setDayContent = function(date) {
-    // var content = [{Game: "usj", Date: "August 7th", Field: "A"}, 6, 7];
-    // return "<p>" + content + "</p>";
+  $scope.setDayContent = function() {
+    
+    return ;
   };
+
+  console.log("$scope.calendar in app :", $scope.calendar);
 });
