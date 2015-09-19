@@ -7,12 +7,12 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
   var ref = new Firebase("https://soccerdates.firebaseio.com/"); // assume value here is { foo: "bar" }
   var fireCal = $firebaseObject(ref);
   // console.log("fireCal :", fireCal);  
-
   if ($scope.calendar) {
     console.log("$scope.calendar :", $scope.calendar);
     $scope.calendar.localCal = {};
   }
 
+  //removes $$hashkey from objects to make them json/firebase friendly
   $scope.ngObjFixHack = function(ngObj) {
     var output;
     output = angular.toJson(ngObj);
@@ -23,12 +23,15 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
   ///$scope.calendar is the object created by Matertial Calendar///
   ///I am modifying it into something I can work with (add games, etc...)///
   var allWeeks = {};
+  var months = [];
   if ($scope.calendar) {
     var weekCounter = 0;
     var dayCounter = 0;
     ///looping over weeks array-ish objects///
     for (key in $scope.calendar.weeks) {
+      // console.log("$scope.calendar.localCal first:", $scope.calendar.localCal);
       allWeeks[weekCounter] = $scope.calendar.weeks[key].slice();
+      // console.log('$scope.calendar.weeks in beforehack :', $scope.calendar.weeks);
       weekCounter ++;
       ///looping over days array-ish objects///
       for (key2 in $scope.calendar.weeks[key]){
@@ -42,12 +45,11 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
         dayCounter++;
       }
     }
+    console.log($scope.calendar.month);
     $scope.calendar.weeks = allWeeks;
-    // console.log("allWeeks :", allWeeks)
-    console.log("$scope.calendar.weeks :", $scope.calendar.weeks);
+    // console.log("allWeeks :", allWeeks);
+    // console.log("$scope.calendar.weeks after allweeks :", $scope.calendar.weeks);
   }
-
-  //removes $$hashkey from objects to make them json/firebase friendly
 
   function updateLocal() {
     if ($scope.calendar) {
@@ -55,6 +57,7 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
       var dayCounter = 0;
       ///looping over weeks array-ish objects///
       for (key in $scope.calendar.weeks) {
+        // console.log('$scope.calendar.weeks in updateLocal :', $scope.calendar.weeks);
         $scope.calendar.localCal[weekCounter] = $scope.calendar.weeks[key].slice();
         weekCounter ++;
         ///looping over days array-ish objects///
@@ -91,6 +94,9 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
         dayCounter++;
       }
     }
+    console.log("fireCal :", fireCal);
+    // var myObject = _.merge($scope.calendar.weeks, fireCal);
+    // console.log("myObject :", myObject);
     fireCal.$save().then(function(ref) {
       ref.key() === fireCal.$id; // true
     }, function(error) {
@@ -98,15 +104,53 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
     });    
   }
 
+  //next step is to dynamically merge fireCal with $scope.calendar.weeks
+
+  function bringTheFire () {
+    fireCal.$loaded()
+    .then(function() {
+      console.log($scope.calendar.weeks);
+      console.log(fireCal);
+      for (key in $scope.calendar.weeks) {
+        for (key2 in $scope.calendar.weeks[key]) {
+          // console.log("for check");
+          if($scope.calendar.weeks[key][key2].id) {
+            // console.log("if check");
+            var dateId = $scope.calendar.weeks[key][key2].id;
+            // console.log(dateId);
+            for (key3 in fireCal) {
+              for (key4 in fireCal[key3]) {              
+                if (fireCal[key3][key4].id === dateId) {
+                  if(fireCal[key3][key4].clicked){
+                    $scope.calendar.weeks[key][key2].clicked = fireCal[key3][key4].clicked;
+                    console.log($scope.calendar.weeks[key][key2]);
+                  };
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+  }
+
+
   $scope.onUpdate = function() {
     updateLocal();
     updateFire();
-    console.log("onUpdate");
   };
+  $scope.onLoad = function() {
+    updateLocal();
+    bringTheFire();
+  }
 
   if($scope.calendar) {
-    $scope.onUpdate();
+    $scope.onLoad();
   }
+
+
+
+
 
   $scope.selectedDate = null;
   $scope.setDirection = function(direction) {
