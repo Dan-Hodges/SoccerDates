@@ -41,6 +41,7 @@ angular.module("materialExample").controller("calendarCtrl", function($scope, $f
   $scope.selectedDate;
   $scope.dayClick = function(date) {
     $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
+    console.log(date);
   };
   // $scope.prevMonth = function(data) {
   //   $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
