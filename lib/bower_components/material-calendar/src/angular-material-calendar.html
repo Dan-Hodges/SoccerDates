@@ -22,8 +22,12 @@
           <md-tooltip>{{ day.date | date:dayTooltipFormat:timezone }}</md-tooltip>
           <div class='md-calendar-number'>{{ day.date | date:dayFormat:timezone }}</div>
           <!-- <div class='md-calendar-content' flex ng-bind-html='getDayContent(day)'></div> -->
-          <!-- <div class='md-calendar-content'flex ng-repeat="game in games">{{game.title | filter: {Date:'Old'}}}</div> -->
-          <div class='md-calendar-content'flex>{{day.info.clicked}}</div>
+          <div class='md-calendar-content'flex>
+            <h6>TCA{{day.info.TCA}}</h6>
+            <h6>USJ{{day.info.USJ}}</h6>
+          </div>
+          <div class='md-calendar-content'flex></div>
+          <!-- <div class='md-calendar-content' ng-repeat="game in day.info.games" flex>{{game}}</div> -->
         </div>
       </div>
     </div>
