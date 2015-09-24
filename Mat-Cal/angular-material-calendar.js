@@ -1,4 +1,4 @@
-angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
+angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
 .filter("dateToGmt", function() {
   return function(date) {
     date = date || new Date();
@@ -84,7 +84,7 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
 .directive("mdCalendar", ["$compile", "$parse", "$http", "$q", "$filter", "Calendar","$firebaseObject", function ($compile, $parse, $http, $q, $filter, Calendar, $firebaseObject) {
   
   var hasCss;
-  var defaultTemplate = "lib/bower_components/material-calendar/src/angular-material-calendar.html";
+  var defaultTemplate = "Templates/angular-material-calendar.html";
 
   var injectCss = function() {
     if (! hasCss) {
@@ -110,6 +110,7 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
       dayContent: "=?",
       timezone: "=?",
       titleFormat: "=?",
+      templateRef: "=?",
       dayFormat: "=?",
       dayLabelFormat: "=?",
       dayLabelTooltipFormat: "=?",
@@ -117,8 +118,14 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
     },
 
     link: function ($scope, $element, $attrs, $ngModel) {
-      $scope.templateUrl = defaultTemplate;
-      $scope.template = defaultTemplate;
+
+      if ($attrs.hasOwnProperty("templateRef")) {
+        $scope.templateUrl = $attrs.templateRef;
+      } else {
+        $scope.templateUrl = defaultTemplate;
+      }
+
+      // $scope.template = defaultTemplate;
       injectCss();
       $scope.columnWeekLayout = "column";
       $scope.weekLayout = "row";
@@ -149,34 +156,36 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
 
 
         $scope.downFromFire = function() {
-        var ref = new Firebase("https://soccerdates.firebaseio.com");
-        $scope.FB = $firebaseObject(ref);
-        $scope.FB.$loaded()
-          .then(function() {
-            // console.log($scope.FB);
-            for (key in $scope.calendar.weeks[$scope.calendar.month]) {
-              for (key2 in $scope.calendar.weeks[$scope.calendar.month][key]) {
-                var dateId = $scope.calendar.weeks[$scope.calendar.month][key][key2].jsonId;
-                // console.log("json date :", dateId);
-                var index = $scope.calendar.month;
-                for (i in $scope.FB[index]){   
-                  // console.log("$scope.FB[index][i].date :", JSON.stringify($scope.FB[index][i].date));         
-                  if (JSON.stringify($scope.FB[index][i].date) === dateId) {
-                    if ($scope.FB[$scope.calendar.month][i].info) {
-                      $scope.calendar.weeks[$scope.calendar.month][key][key2].info = angular.copy($scope.FB[$scope.calendar.month][i].info);
+          if ($scope.templateUrl === defaultTemplate) {
+            var ref = new Firebase("https://soccerdates.firebaseio.com");
+            $scope.FB = $firebaseObject(ref);
+            $scope.FB.$loaded()
+              .then(function() {
+                // console.log($scope.FB);
+                for (key in $scope.calendar.weeks[$scope.calendar.month]) {
+                  for (key2 in $scope.calendar.weeks[$scope.calendar.month][key]) {
+                    var dateId = $scope.calendar.weeks[$scope.calendar.month][key][key2].jsonId;
+                    // console.log("json date :", dateId);
+                    var index = $scope.calendar.month;
+                    for (i in $scope.FB[index]){   
+                      // console.log("$scope.FB[index][i].date :", JSON.stringify($scope.FB[index][i].date));         
+                      if (JSON.stringify($scope.FB[index][i].date) === dateId) {
+                        if ($scope.FB[$scope.calendar.month][i].info) {
+                          $scope.calendar.weeks[$scope.calendar.month][key][key2].info = angular.copy($scope.FB[$scope.calendar.month][i].info);
+                        }
+                        // console.log("$scope.FB[$scope.calendar.month][i].info :", $scope.FB[$scope.calendar.month][i].info)
+                        // console.log("match");
+                      } else {
+                        // console.log("no match from fire");
+                      }
                     }
-                    // console.log("$scope.FB[$scope.calendar.month][i].info :", $scope.FB[$scope.calendar.month][i].info)
-                    // console.log("match");
-                  } else {
-                    // console.log("no match from fire");
                   }
-                }
-              }
-            } 
-          })
-          .catch(function(err) {
-            console.error(err);
-          });
+                } 
+              })
+              .catch(function(err) {
+                console.error(err);
+              });
+          }
         };
         $scope.downFromFire();
 
@@ -184,8 +193,7 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
         for (key in $scope.calendar.weeks[$scope.calendar.month]) {
           for (key2 in $scope.calendar.weeks[$scope.calendar.month][key]) {
             var date = $scope.calendar.weeks[$scope.calendar.month][key][key2].date;
-            for (var i in $scope.calendar.dates[$scope.calendar.month]){
-            // console.log("$scope.calendar.dates($scope.calendar.month :", $scope.calendar.dates[$scope.calendar.month]);            
+            for (var i in $scope.calendar.dates[$scope.calendar.month]){          
               if ($scope.calendar.dates[$scope.calendar.month][i].date === date) {
                 console.log("if has come");
                 $scope.calendar.dates[$scope.calendar.month][i].info = angular.copy($scope.calendar.weeks[$scope.calendar.month][key][key2].info);
@@ -196,11 +204,12 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
       };
 
       $scope.datesUpToFire = function () {
-        // console.log("$scope.calendar.date[$scope.calendar.month] :", $scope.calendar.dates[$scope.calendar.month]);
-        var happy = $scope.calendar.dates[$scope.calendar.month];
-        var number = $scope.calendar.month;
-        var ref = new Firebase("https://soccerdates.firebaseio.com/" + number);
-        ref.update(number=happy);
+        if ($scope.templateUrl === defaultTemplate) {
+          var happy = $scope.calendar.dates[$scope.calendar.month];
+          var number = $scope.calendar.month;
+          var ref = new Firebase("https://soccerdates.firebaseio.com/" + number);
+          ref.update(number=happy);
+        }  
       };
 
       function sync () {
@@ -210,7 +219,6 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
             for (key3 in $scope.calendar.weeks[$scope.calendar.month]){
               for (key4 in $scope.calendar.weeks[$scope.calendar.month][key3]){
                 if ($scope.calendar.weeks[$scope.calendar.month][key3][key4].jsonId === dateId) {
-                  // console.log("iran");
                   $scope.calendar.fireCal[$scope.calendar.month][key][key2].info = $scope.calendar.weeks[$scope.calendar.month][key3][key4].info;
                 }
               }
@@ -236,7 +244,6 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
       };
 
       $scope.next = function () {
-        // sync();
         $scope.calendar.next();
         console.log("$scope.calendar :", $scope.calendar);
         $scope.downFromFire();
@@ -248,19 +255,20 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
       };
 
       $scope.handleDayClick = function (date) {
-        // console.log(date);
         $scope.active = date;
-        date.info.kamakazi = "mean";
-        $scope.weeksToDates();
-        $scope.datesUpToFire();
-        $scope.downFromFire();
+        if ($scope.templateUrl === defaultTemplate) {
+          console.log("$scope.template === defaultTemplate")
+          $scope.weeksToDates();
+          $scope.datesUpToFire();
+          $scope.downFromFire();
 
-        if ($attrs.ngModel) {
-          $parse($attrs.ngModel).assign($scope.$parent, date);
+          if ($attrs.ngModel) {
+            $parse($attrs.ngModel).assign($scope.$parent, date);
+          }
+          handleCb($scope.onDayClick, date);
+          // sync();
+          console.log('$scope.calendar :', $scope.calendar);
         }
-        handleCb($scope.onDayClick, date);
-        // sync();
-        console.log('$scope.calendar :', $scope.calendar);
       };
 
       var setTemplate = function(contents) {
@@ -270,9 +278,10 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
 
       var init = function() {
         var deferred = $q.defer();
+
         if ($scope.templateUrl) {
           $http
-            .get($scope.template)
+            .get($scope.templateUrl)
             .success(function(html, status, fn, xhr) {
               deferred.resolve(html);
             })
@@ -284,68 +293,8 @@ angular.module("soccerDates", ["ngMaterial", "ngSanitize"])
         }
         return deferred.promise;
       };
+
       init().then(setTemplate);
     }
   };
 }]);
-
-      // function syncUp () {
-      // var ref = new Firebase("https://soccerdates.firebaseio.com/");     
-      // var obj = $firebaseObject(ref);
-      // obj.$loaded()
-      //   .then(function(data) {
-      //     for (key in $scope.calendar.fireCal[$scope.calendar.month]) {
-      //       for (key2 in $scope.calendar.fireCal[$scope.calendar.month][key]) {
-      //         var dateId = $scope.calendar.fireCal[$scope.calendar.month][key][key2].jsonId;
-      //         for (key3 in obj[$scope.calendar.month]){
-      //           for (key4 in obj[$scope.calendar.month][key3]){
-      //             if (obj[$scope.calendar.month][key3][key4].jsonId === dateId) {
-      //               $scope.calendar.fireCal[$scope.calendar.month][key3][key4].info = "sad";
-      //               // obj[$scope.calendar.month][key3][key4].info = angular.copy($scope.calendar.fireCal[$scope.calendar.month][key][key2].info);
-      //               var ref2 = new Firebase("https://soccerdates.firebaseio.com/" + ([$scope.calendar.month])+ '/' +[key3] + '/' + [key4]);   
-      //               console.log('ref2 :', ref2);
-      //               var obj2 = $firebaseObject(ref2);
-      //               obj2.info = angular.copy($scope.calendar.fireCal[$scope.calendar.month][key][key2].info)
-      //               obj2.$save().then(function(ref) {
-      //                 ref.key() === obj2.$id; // true
-      //               }, function(error) {
-      //                 console.log("Error:", error);
-      //               });
-      //             }
-      //           }
-      //         }
-      //       }
-      //     } 
-      //   })
-      //   .catch(function(error) {
-      //     console.error("Error:", error);
-      //   });
-      // }
-      // syncUp()
-
-      // function syncDown () {
-      //   for (key in $scope.calendar.fireCal[$scope.calendar.month]) {
-      //     for (key2 in $scope.calendar.fireCal[$scope.calendar.month][key]) {
-      //       var dateId = $scope.calendar.fireCal[$scope.calendar.month][key][key2].jsonId;
-      //       for (key3 in $scope.calendar.weeks[$scope.calendar.month]){
-      //         for (key4 in $scope.calendar.weeks[$scope.calendar.month][key3]){
-      //           if ($scope.calendar.weeks[$scope.calendar.month][key3][key4].jsonId === dateId) {
-      //             console.log("iran");
-      //              $scope.calendar.fireCal[$scope.calendar.month][key][key2].info = angular.copy($scope.calendar.weeks[$scope.calendar.month][key3][key4].info);                
-      //           }
-      //         }
-      //       }
-      //     }
-      //   } 
-      // }
-
-            // var ref = new $window.Firebase("https://soccerdates.firebaseio.com/");
-
-      // var ref = new Firebase("https://soccerdates.firebaseio.com/");     
-      // var obj = $firebaseObject(ref);
-
-      // obj.$bindTo($scope, "calendar.fireCal").then(function() {
-      //   console.log($scope.calendar.fireCal); // { foo: "bar" }
-      //   // $scope.fireCal.foo = "baz";  // will be saved to the database
-      //   // ref.set({ foo: "baz" });  // this would update the database and $scope.data
-      // });

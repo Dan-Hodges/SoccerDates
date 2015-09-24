@@ -1,0 +1,77 @@
+<md-content ng-controller="loginCtrl" class='md-calendar' layout='column' layout-fill flex md-swipe-left='next()' md-swipe-right='prev()'>
+  
+  <md-toolbar>
+    <div class='md-toolbar-tools' layout='row'>
+      <md-button class='md-calendar-left-btn' ng-click='prev()'>&laquo;</md-button>
+      <h2 class='md-calendar-title' flex><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2>
+      <md-button ng-click="toggleRight()"
+        class="md-calendar">
+        Log In
+      </md-button>
+      <md-button class='md-calendar-left-btn' ng-click='next()'>&raquo;</md-button>
+    </div>
+  </md-toolbar>
+
+  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <md-toolbar class="md-theme-light">
+      <h1 class="md-toolbar-tools"></h1>
+    </md-toolbar>
+    <md-content layout-padding>
+      <form>
+        <h3 class="md-display-1">Sign In</h3>
+        <md-input-container>
+          <label for="email">Email</label>
+          <input type="text" id="email" ng-model="data" md-autofocus>
+        </md-input-container>
+        <md-input-container>
+          <label for="password">Password</label>
+          <input type="password" id="password" ng-model="data2" md-autofocus>
+        </md-input-container>
+      <md-button ng-click="close()" class="md-primary">
+        Sign In
+      </md-button>
+      </form>
+    </md-content>
+    <md-content layout-padding>
+    <md-content layout-padding>
+      <form>
+        <h3 class="md-display-1">Sign Up</h3>
+        <md-input-container>
+          <label for="teamName">Team Name</label>
+          <input type="text" id="teamName" ng-model="data3" md-autofocus>
+        </md-input-container>      
+        <md-input-container>
+          <label for="newemail">Email</label>
+          <input type="text" id="email" ng-model="data4" md-autofocus>
+        </md-input-container>
+        <md-input-container>
+          <label for="newPassword">Password</label>
+          <input type="newPassword" id="newPassword" ng-model="data5" md-autofocus>
+        </md-input-container>
+      </form>
+      <md-button ng-click="close()" class="md-primary">
+        Sign Up
+      </md-button>
+    </md-content>
+    </md-content>
+  </md-sidenav>
+
+  <md-content flex layout="column" layout-fill>
+    <div class='md-calendar-subheader' layout='row' layout-fill layout-padding layout-align='space-between center' ng-hide='weekLayout == "column"'>
+      <div class='md-calendar-subheader-day' flex ng-repeat='day in calendar.weeks[calendar.month][0]'>
+        <md-tooltip>{{ day.date | date:dayLabelTooltipFormat:timezone }}</md-tooltip>
+        {{ day.date | date:dayLabelFormat:timezone }}
+      </div>
+    </div>
+
+    <div flex class='md-calendar-month' layout="column">
+      <div flex class='md-calendar-week' ng-class='calendarDirection' layout='{{ weekLayout }}' layout-fill ng-repeat='week in calendar.weeks[calendar.month]'>
+        <div class='md-calendar-day' ng-hide="! sameMonth(day.date) && weekLayout == columnWeekLayout" ng-class='{"md-calendar-day-inactive" : ! sameMonth(day.date), active: active === day.date }' flex layout layout-fill ng-click='handleDayClick(day); showAdvanced($event)' ng-repeat='day in week' ng-class='{ active: active === day }'>
+          <md-tooltip>{{ day.date | date:dayTooltipFormat:timezone }}</md-tooltip>
+          <div class='md-calendar-number'>{{ day.date | date:dayFormat:timezone }}</div>
+          <div class='md-calendar-content' flex ng-bind-html='getDayContent(day)'></div>
+        </div>
+      </div>
+    </div>
+  </md-content>
+</md-content>

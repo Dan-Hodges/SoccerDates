@@ -1,0 +1,19 @@
+<div ng-controller="loginCtrl">
+	<md-calendar flex layout layout-fill
+	  calendar-direction="direction"
+	  on-prev-month="prevMonth"
+	  on-next-month="nextMonth"
+	  on-day-click="dayClick"
+	  title-format="'MMMM y'"
+	  ng-model='selectedDate'
+	  day-format="'d'"
+	  day-label-format="'EEE'"
+	  day-label-tooltip-format="'EEEE'"
+	  template-ref="Templates/login-calendar.html"
+	  day-tooltip-format="'fullDate'"
+	  day-content="setDayContent">
+	</md-calendar>
+	<div>
+		<h1>{{this.date}}</h1>
+	</div>
+</div>
