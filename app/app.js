@@ -1,28 +1,34 @@
 var app = angular.module("soccerDates", ["ngRoute", "ngMaterial", "materialCalendar", "firebase"]);
 
+app.run(["$rootScope", "$location", function($rootScope, $location) {
+  $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
+    // We can catch the error thrown when the $requireAuth promise is rejected
+    // and redirect the user back to the home page
+    if (error === "AUTH_REQUIRED") {
+      $location.path("/");
+    }
+  });
+}]);
+
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'partials/login.html',
-        controller: 'loginCtrl'
+        controller: 'sideNavCtrl'
       })
       .when('/calendar', {
         templateUrl: 'partials/cal.html',
-        controller: 'calendarCtrl'
+        controller: 'calendarCtrl',
+        resolve: {
+          // controller will not be loaded until $waitForAuth resolves
+          // Auth refers to our $firebaseAuth wrapper in the example above
+          "currentAuth": ["Auth", function(Auth) {
+            // $waitForAuth returns a promise so the resolve waits for it to complete
+            return Auth.$requireAuth();
+          }]
+        }
       })
-      // .when('/profile', {
-      //   templateUrl: 'partials/profile.html',
-      //   controller: 'ProfileCtrl'
-      // })
-      // .when('/chooseskill', {
-      //   templateUrl: 'partials/chooseskill.html',
-      //   controller: 'ChooseSkillCtrl'
-      // })
-      // .when('/culinaryrepo', {
-      //   templateUrl: 'partials/culinaryrepo.html',
-      //   controller: 'CulinaryRepoCtrl'
-      // })
       .otherwise({
         redirectTo: '/'
       });

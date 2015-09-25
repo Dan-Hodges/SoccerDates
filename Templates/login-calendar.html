@@ -1,4 +1,4 @@
-<md-content ng-controller="loginCtrl" class='md-calendar' layout='column' layout-fill flex md-swipe-left='next()' md-swipe-right='prev()'>
+<md-content ng-controller="sideNavCtrl" class='md-calendar' layout='column' layout-fill flex md-swipe-left='next()' md-swipe-right='prev()'>
   
   <md-toolbar>
     <div class='md-toolbar-tools' layout='row'>
@@ -21,13 +21,13 @@
         <h3 class="md-display-1">Sign In</h3>
         <md-input-container>
           <label for="email">Email</label>
-          <input type="text" id="email" ng-model="data" md-autofocus>
+          <input type="email" id="email" ng-model="email" md-autofocus>
         </md-input-container>
         <md-input-container>
           <label for="password">Password</label>
-          <input type="password" id="password" ng-model="data2" md-autofocus>
+          <input type="password" id="password" ng-model="password" md-autofocus>
         </md-input-container>
-      <md-button ng-click="close()" class="md-primary">
+      <md-button ng-click="close(); login()" class="md-primary">
         Sign In
       </md-button>
       </form>
@@ -37,19 +37,19 @@
       <form>
         <h3 class="md-display-1">Sign Up</h3>
         <md-input-container>
-          <label for="teamName">Team Name</label>
-          <input type="text" id="teamName" ng-model="data3" md-autofocus>
+          <label for="team">Team Name</label>
+          <input type="text" id="teamName" ng-model="team" md-autofocus>
         </md-input-container>      
         <md-input-container>
           <label for="newemail">Email</label>
-          <input type="text" id="email" ng-model="data4" md-autofocus>
+          <input type="email" id="email" ng-model="newEmail" md-autofocus>
         </md-input-container>
         <md-input-container>
           <label for="newPassword">Password</label>
-          <input type="newPassword" id="newPassword" ng-model="data5" md-autofocus>
+          <input type="password" id="newPassword" ng-model="newPassword" md-autofocus>
         </md-input-container>
       </form>
-      <md-button ng-click="close()" class="md-primary">
+      <md-button ng-click="close(); create()" class="md-primary">
         Sign Up
       </md-button>
     </md-content>

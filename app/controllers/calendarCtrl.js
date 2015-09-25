@@ -1,30 +1,30 @@
-app.controller("calendarCtrl", function($scope, $firebaseObject, $firebaseArray, $filter, $mdDialog, $timeout, $mdSidenav, $log, $mdUtil) {
+app.controller("calendarCtrl",function(
+$scope,currentAuth,$firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$mdSidenav,$log,$mdUtil) {
 
   $scope._ = _;
 
-  if ($scope.calendar) {
-    console.log($scope.calendar);
-  }
+    console.log(currentAuth);
 
-  $scope.close = function () {
-    $mdSidenav('right').close()
-      .then(function () {
-        $log.debug("close RIGHT is done");
-      });
-  }
 
-  $scope.toggleRight = buildToggler('right');
-  function buildToggler(navID) {
-    var debounceFn =  $mdUtil.debounce(function(){
-      $mdSidenav(navID)
-        .toggle()
-        .then(function () {
-          $log.debug("toggle " + navID + " is done");
-        });
-      },200);
-    return debounceFn;
-  }
-  // $scope.toggleRight();
+  // $scope.close = function () {
+  //   $mdSidenav('right').close()
+  //     .then(function () {
+  //       $log.debug("close RIGHT is done");
+  //     });
+  // }
+
+  // $scope.toggleRight = buildToggler('right');
+  // function buildToggler(navID) {
+  //   var debounceFn =  $mdUtil.debounce(function(){
+  //     $mdSidenav(navID)
+  //       .toggle()
+  //       .then(function () {
+  //         $log.debug("toggle " + navID + " is done");
+  //       });
+  //     },200);
+  //   return debounceFn;
+  // }
+  // // $scope.toggleRight();
 
 
   $scope.showAdvanced = function(ev) {
@@ -60,13 +60,4 @@ app.controller("calendarCtrl", function($scope, $firebaseObject, $firebaseArray,
   // $scope.setDirection("verticle");
   $scope.selectedDate;
 
-  $scope.dayClick = function(date) {
-    $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
-  };
-  $scope.prevMonth = function(data) {
-    $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
-  };
-  $scope.nextMonth = function(data) {
-    $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
-  }    
 });
