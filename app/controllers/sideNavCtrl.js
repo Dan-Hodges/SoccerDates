@@ -7,6 +7,7 @@ app.controller("sideNavCtrl", function($scope, $location, $firebaseObject, $fire
       });
   }
 
+
   $scope.toggleRight = buildToggler('right');
 
   function buildToggler(navID) {

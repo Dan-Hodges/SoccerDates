@@ -4,9 +4,9 @@
     <div class='md-toolbar-tools' layout='row'>
       <md-button class='md-calendar-left-btn' ng-click='prev()'>&laquo;</md-button>
       <h2 class='md-calendar-title' flex><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2>
-      <md-button ng-click="toggleRight()"
-        class="md-calendar">
-        Log In
+      <md-button ng-click="$parent.toggleRight()"
+        class="md-calendar" ng-bind="$parent.currentuser">
+        {{$parent.currentuser}}
       </md-button>
       <md-button class='md-calendar-left-btn' ng-click='next()'>&raquo;</md-button>
     </div>
@@ -18,41 +18,21 @@
     </md-toolbar>
     <md-content layout-padding>
       <form>
-        <h3 class="md-display-1">Sign In</h3>
+        <h3 class="md-display-1">My Team</h3>
         <md-input-container>
-          <label for="email">Email</label>
-          <input type="text" id="email" ng-model="data" md-autofocus>
+          <label for="club">Club/School</label>
+          <input type="text" id="club" ng-model="$parent.club" md-autofocus>
         </md-input-container>
         <md-input-container>
-          <label for="password">Password</label>
-          <input type="password" id="password" ng-model="data2" md-autofocus>
+          <label for="mascot">Mascot</label>
+          <input type="text" id="mascot" ng-model="$parent.mascot" md-autofocus>
         </md-input-container>
-      <md-button ng-click="close()" class="md-primary">
-        Sign In
+      <md-button ng-click="$parent.close(); $parent.setUser()" class="md-primary">
+        Save
       </md-button>
       </form>
     </md-content>
     <md-content layout-padding>
-    <md-content layout-padding>
-      <form>
-        <h3 class="md-display-1">Sign Up</h3>
-        <md-input-container>
-          <label for="teamName">Team Name</label>
-          <input type="text" id="teamName" ng-model="data3" md-autofocus>
-        </md-input-container>      
-        <md-input-container>
-          <label for="newemail">Email</label>
-          <input type="text" id="email" ng-model="data4" md-autofocus>
-        </md-input-container>
-        <md-input-container>
-          <label for="newPassword">Password</label>
-          <input type="newPassword" id="newPassword" ng-model="data5" md-autofocus>
-        </md-input-container>
-      </form>
-      <md-button ng-click="close()" class="md-primary">
-        Sign Up
-      </md-button>
-    </md-content>
     </md-content>
   </md-sidenav>
 
