@@ -1,5 +1,4 @@
 <md-dialog aria-label="Add A Game">
-  <form>
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2  class='md-toolbar-tools' ng-bind="date.short">{{date.short}}</h2>
@@ -13,28 +12,28 @@
     <div>
       <h1 class="md-title">Schedule a Game</h1>
       <div layout="row">
-        <md-input-container style="margin-right: 10px;">
+        <md-input-container>
           <label>Opponent</label>
-          <md-select ng-model="users">
-            <md-option ng-repeat="user in users">{{user.club}}</md-option>
+          <md-select multiple='true' ng-model="users">
+            <md-option ng-repeat="user in users track by $index">{{user.club}}</md-option>
           </md-select>
         </md-input-container>
-        <md-input-container style="margin-right: 10px;">
+        <md-input-container>
           <label>Time</label>
-          <md-select ng-model="timesArray">
-            <md-option ng-repeat="time in timesArray">{{time}}</md-option>
+          <md-select multiple='true'ng-model="timesArray">
+            <md-option  multiple='false'  ng-repeat="time in timesArray track by $index">{{time.time}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container>
           <label>Field</label>
-          <md-select ng-model="fields">
-            <md-option ng-repeat="field in fields">
-              {{field}}
+          <md-select multiple='true' ng-model="fields">
+          <!-- <md-select multiple='false' ng-model="fields"> -->
+            <md-option ng-repeat="field in fields track by $index">
+              {{field.field}}
             </md-option>                 
           </md-select>
         </md-input-container>
       </div>
-      <p ng-if="topping">You ordered a {{size.toLowerCase()}} pizza with {{topping.toLowerCase()}}.</p>
     </div>
   </md-dialog-content>
   <div class="md-actions" layout="row">
@@ -49,5 +48,4 @@
       Useful
     </md-button>
   </div>
-  </form>
 </md-dialog>

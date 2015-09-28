@@ -36,7 +36,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.users = $firebaseArray(usersRef);
   $scope.users.$loaded()
     .then(function(){
-      // console.log("$scope.users :", $scope.users);
+      console.log("$scope.users :", $scope.users);
     });
   $scope.setUser = function () {
     console.log("setUsername");
@@ -115,15 +115,16 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
         medium = " PM";
       }
       if (j == 0) {
-        time.push(z + ':00' + medium);
+        time.push({time :(z + ':00' + medium)});
       } else {
-        time.push(z + ':' + j + medium);
+        time.push({time: (z + ':' + j + medium)});
       }
     }
   }
   time.pop();
+  console.log(time);
   $scope.timesArray = time;
-  $scope.fields = ['Home', 'Away'];
+  $scope.fields = [{field: "Home"}, {field: "Away"}];
 
 
   $scope.selectedDate = null;
