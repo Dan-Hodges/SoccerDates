@@ -5,24 +5,36 @@
       <h2  class='md-toolbar-tools' ng-bind="date.short">{{date.short}}</h2>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="cancel()">
-        <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        <!-- <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon> -->
       </md-button>
     </div>
   </md-toolbar>
   <md-dialog-content style="max-width:800px;max-height:810px; ">
     <div>
-<div>
-    <h1 class="md-title">Schedule a Game</h1>
-    <div layout="row">
-      <md-input-container style="margin-right: 10px;">
-        <label>Opponent</label>
-        <md-select ng-model="users">
-          <md-option ng-repeat="user in users" value="{{user.club}}">{{user.club}}</md-option>
-        </md-select>
-      </md-input-container>
-    </div>
-    <p ng-if="topping">You ordered a {{size.toLowerCase()}} pizza with {{topping.toLowerCase()}}.</p>
-  </div>
+      <h1 class="md-title">Schedule a Game</h1>
+      <div layout="row">
+        <md-input-container style="margin-right: 10px;">
+          <label>Opponent</label>
+          <md-select ng-model="users">
+            <md-option ng-repeat="user in users">{{user.club}}</md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container style="margin-right: 10px;">
+          <label>Time</label>
+          <md-select ng-model="timesArray">
+            <md-option ng-repeat="time in timesArray">{{time}}</md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container>
+          <label>Field</label>
+          <md-select ng-model="fields">
+            <md-option ng-repeat="field in fields">
+              {{field}}
+            </md-option>                 
+          </md-select>
+        </md-input-container>
+      </div>
+      <p ng-if="topping">You ordered a {{size.toLowerCase()}} pizza with {{topping.toLowerCase()}}.</p>
     </div>
   </md-dialog-content>
   <div class="md-actions" layout="row">

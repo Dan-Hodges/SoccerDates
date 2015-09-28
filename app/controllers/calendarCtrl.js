@@ -10,23 +10,23 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.currentuser;
   currentUserObject.$loaded()
     .then(function() {
-      console.log("currentUserObject :", currentUserObject);
+      // console.log("currentUserObject :", currentUserObject);
       if (currentUserObject.$value) {
         $scope.currentuser = currentUserObject.$value;
       } else {
         $scope.currentuser = 'Setup Your Profile';
       }
-      console.log($scope.currentuser);
+      // console.log($scope.currentuser);
     })
     .catch(function(err) {
       console.error(err);
     });
-    console.log("$scope.currentuser :", $scope.currentuser);
-    console.log("uid :", uid);
+    // console.log("$scope.currentuser :", $scope.currentuser);
+    // console.log("uid :", uid);
 
   if($scope.calendar) {
     $scope.calendar.currentUser = $scope.currentUser;
-    console.log($scope.calendar);
+    // console.log($scope.calendar);
   }  
 
 
@@ -36,7 +36,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.users = $firebaseArray(usersRef);
   $scope.users.$loaded()
     .then(function(){
-      console.log("$scope.users :", $scope.users);
+      // console.log("$scope.users :", $scope.users);
     });
   $scope.setUser = function () {
     console.log("setUsername");
@@ -100,12 +100,30 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     }
   }
 
-  var d = new Date().getHours(); // get the hour in 24 hour format
-  var a = d > 11 ? "pm" : "am"; /// get AM or PM
-  var hour = ((d + 11) % 12 + 1); // Convert 24 hours to 12 
-  $scope.hoursList = (hour + ':00 ' + a); // Set the dropdowns selected value
-  console.log("$scope.hoursList :", $scope.hoursList);
-
+  var time = [], i, j;
+  for(i=7; i<23; i++) {
+    if (i > 12) {
+      var z = i -12;
+    } else {
+      var z = i;
+    }
+    for(j=0; j<=45; j+=15) {
+      var medium;
+      if (i < 13) {
+        medium = " AM";
+      } else {
+        medium = " PM";
+      }
+      if (j == 0) {
+        time.push(z + ':00' + medium);
+      } else {
+        time.push(z + ':' + j + medium);
+      }
+    }
+  }
+  time.pop();
+  $scope.timesArray = time;
+  $scope.fields = ['Home', 'Away'];
 
 
   $scope.selectedDate = null;
