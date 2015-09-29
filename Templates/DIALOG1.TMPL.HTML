@@ -3,49 +3,52 @@
     <div class="md-toolbar-tools">
       <h2  class='md-toolbar-tools' ng-bind="date.short">{{date.short}}</h2>
       <span flex></span>
-      <md-button class="md-icon-button" ng-click="cancel()">
-        <!-- <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon> -->
+      <md-button class="md-icon-button" ng-click="cancel()"> 
       </md-button>
     </div>
   </md-toolbar>
-  <md-dialog-content style="max-width:800px;max-height:810px; ">
-    <div>
-      <h1 class="md-title">Schedule a Game</h1>
-      <div layout="row">
-        <md-input-container>
-          <label>Opponent</label>
-          <md-select multiple='true' ng-model="users">
-            <md-option ng-repeat="user in users track by $index">{{user.club}}</md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container>
-          <label>Time</label>
-          <md-select multiple='true'ng-model="timesArray">
-            <md-option  multiple='false'  ng-repeat="time in timesArray track by $index">{{time.time}}</md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container>
-          <label>Field</label>
-          <md-select multiple='true' ng-model="fields">
-          <!-- <md-select multiple='false' ng-model="fields"> -->
-            <md-option ng-repeat="field in fields track by $index">
-              {{field.field}}
-            </md-option>                 
-          </md-select>
-        </md-input-container>
-      </div>
-    </div>
-  </md-dialog-content>
-  <div class="md-actions" layout="row">
-    <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
-      More on Wikipedia
-    </md-button>
-    <span flex></span>
-    <md-button ng-click="answer('not useful')" >
-     Not Useful
-    </md-button>
-    <md-button ng-click="answer('useful')" style="margin-right:20px;" >
-      Useful
-    </md-button>
-  </div>
+
+  <md-content class="md-padding" style="min-width:350px">
+    <md-tabs md-selected="data.selectedIndex" md-align-tabs="data.bottom ? 'bottom' : 'top'}}">
+      <md-tab id="tab1">
+        <md-tab-label>Add Game</md-tab-label>
+        <md-tab-body>
+          <div layout="row" class="md-padding" layout="row" layout-sm="column" layout-align="left center"
+         style="padding-top: 0;">
+            <md-input-container>
+              <label>Opponent</label>
+              <md-select multiple='true' ng-model="users" style="margin: 5px;">
+                <md-option ng-repeat="user in users track by $index">{{user.club}}</md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container>
+              <label>Time</label >
+              <md-select multiple='true'ng-model="timesArray" style="margin: 5px;">
+                <md-option  multiple='false'  ng-repeat="time in timesArray track by $index">{{time.time}}</md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container>
+              <label>Field</label>
+              <md-select multiple='true' ng-model="fields" style="margin: 5px;">
+                <md-option ng-repeat="field in fields track by $index">{{field.field}}</md-option>                 
+              </md-select>
+<!--               <md-select name="fieldselect" ng-model="fields" style="margin: 5px;">
+                <option ng-repeat="field in fields" value="field.field">{{field.field}}</option>                 
+              </md-select>
+            </md-input-container> -->
+          </div>
+          <div class="md-actions" style="text-align:left">
+            <md-button ng-click="cancel(); addGame(date)">Add to Schedule</md-button>
+          </div>
+        </md-tab-body>
+      </md-tab>
+      <md-tab id="tab3">
+        <md-tab-label>view Games</md-tab-label>
+        <md-tab-body>
+          View for Item #3 <br/>
+          data.selectedIndex = 2;
+        </md-tab-body>
+      </md-tab>
+    </md-tabs>
+  </md-content>
 </md-dialog>

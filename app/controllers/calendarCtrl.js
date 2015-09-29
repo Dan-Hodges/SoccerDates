@@ -1,7 +1,5 @@
 app.controller("calendarCtrl",function(
-$scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$mdSidenav,$log,$mdUtil) {
-
-
+$scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$mdSidenav,$log,$mdUtil, Calendar) {
 
   $scope.uid = uid;
   var uid = currentAuth.uid;
@@ -21,16 +19,6 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     .catch(function(err) {
       console.error(err);
     });
-    // console.log("$scope.currentuser :", $scope.currentuser);
-    // console.log("uid :", uid);
-
-  if($scope.calendar) {
-    $scope.calendar.currentUser = $scope.currentUser;
-    // console.log($scope.calendar);
-  }  
-
-
-
   
   var usersRef = new Firebase("https://soccerdates.firebaseio.com/users");
   $scope.users = $firebaseArray(usersRef);
@@ -85,6 +73,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     $scope.date = ev;
     console.log("$scope.date :", $scope.date);
   };
+
   function DialogController($scope, $mdDialog) {
     $scope.hide = function() {
       $mdDialog.hide();
@@ -98,7 +87,19 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     $scope.yo = function() {
       console.log("yo");
     }
+    $scope.addGame = function (ev) {
+      console.log("click ");
+      var gameObj = {
+        [$scope.currentuser]: $scope.users[$scope.users.length - 1],
+        time: $scope.timesArray[$scope.timesArray.length -1],
+        location : $scope.fields[$scope.fields.length -1]
+      };
+      console.log("gameObj :", gameObj);
+      var key = $scope.currentuser;
+      $scope.date.info[$scope.currentuser] = gameObj;
+    }
   }
+  
 
   var time = [], i, j;
   for(i=7; i<23; i++) {
@@ -122,10 +123,23 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     }
   }
   time.pop();
-  console.log(time);
   $scope.timesArray = time;
   $scope.fields = [{field: "Home"}, {field: "Away"}];
 
+  function AppCtrl ( $scope ) {
+    $scope.data = {
+      selectedIndex: 0,
+      secondLocked:  true,
+      secondLabel:   "Item Two",
+      bottom:        false
+    };
+    $scope.next = function() {
+      $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
+    };
+    $scope.previous = function() {
+      $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+    };
+  }  
 
   $scope.selectedDate = null;
   $scope.setDirection = function(direction) {
@@ -137,7 +151,6 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.dayClick = function(date) {
     $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
     $scope.showAdvanced(date);
-    // date.info = 'yes man';
   };
   $scope.prevMonth = function(data) {
     $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
