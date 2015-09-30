@@ -1,4 +1,9 @@
-.gamecontent {
-	text-align: center;
-	float: left;
+.contentlist {
+	list-style-type: none;
+	padding-left: 1em;
+	padding-top: 0;
+}
+.contentlistitem {
+	border-top: 0;
+	border-bottom: 0;
 }

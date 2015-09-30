@@ -14,7 +14,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       } else {
         $scope.currentuser = 'Setup Your Profile';
       }
-      // console.log($scope.currentuser);
+      console.log($scope.currentuser);
     })
     .catch(function(err) {
       console.error(err);
@@ -96,7 +96,8 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       };
       console.log("gameObj :", gameObj);
       var key = $scope.currentuser;
-      $scope.date.info[$scope.currentuser] = gameObj;
+      $scope.date.info.games[$scope.currentuser] = gameObj;
+      console.log('$scope.date.info.games[$scope.currentuser] :', $scope.date.info.games[$scope.currentuser]);
     }
   }
   
