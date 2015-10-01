@@ -1,4 +1,4 @@
-var app = angular.module("soccerDates", ["ngRoute", "ngMaterial", "materialCalendar", "firebase"]);
+var app = angular.module("soccerDates", ["ngRoute", "ngMaterial", "materialCalendar", "firebase", 'ngMdIcons']);
 
 app.run(["$rootScope", "$location", function($rootScope, $location) {
   $rootScope.$on("$routeChangeError", function(event, next, previous, error) {

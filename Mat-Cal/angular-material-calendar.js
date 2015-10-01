@@ -83,7 +83,7 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
   }
   return Calendar;
 }])
-.directive("mdCalendar", ["$compile", "$parse", "$http", "$q", "$filter", "Calendar","$firebaseObject", function ($compile, $parse, $http, $q, $filter, Calendar, $firebaseObject) {
+.directive("mdCalendar", ["$compile", "$parse", "$http", "$q", "$filter", "Calendar","$firebaseObject",'$rootScope', function ($compile, $parse, $http, $q, $filter, Calendar, $firebaseObject, $rootScope) {
   
   var hasCss;
   var defaultTemplate = "Templates/angular-material-calendar.html";
@@ -257,10 +257,17 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
         handleCb($scope.onNextMonth, data);
       };
 
+
+      $rootScope.update = function () {
+        $scope.weeksToDates();
+        $scope.datesUpToFire();
+        $scope.downFromFire();
+      }
+
       $scope.handleDayClick = function (date) {
         $scope.active = date;
         if ($scope.templateUrl === defaultTemplate) {
-          console.log("$scope.template === defaultTemplate")
+          console.log("$scope.template === defaultTemplate");
           $scope.weeksToDates();
           $scope.datesUpToFire();
           $scope.downFromFire();

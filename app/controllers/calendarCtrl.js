@@ -1,14 +1,21 @@
 app.controller("calendarCtrl",function(
-$scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$mdSidenav,$log,$mdUtil, Calendar) {
+$scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$mdSidenav,$log,$mdUtil, $location, $rootScope) {
+
+  console.log($rootScope);
 
   $scope.uid = uid;
   var uid = currentAuth.uid;
   var ref = new Firebase("https://soccerdates.firebaseio.com/" + uid);
+  $scope.unauth = function () {
+    console.log("click");
+    var ref = new Firebase("https://soccerdates.firebaseio.com/");
+    ref.unauth();
+    $location.path("/");
+  }
   var currentUserObject = new $firebaseObject(ref);
   $scope.currentuser;
   currentUserObject.$loaded()
     .then(function() {
-      // console.log("currentUserObject :", currentUserObject);
       if (currentUserObject.$value) {
         $scope.currentuser = currentUserObject.$value;
       } else {
@@ -41,7 +48,6 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       });
   }
 
-  // $scope.toggleRight = buildToggler('right');
   $scope.toggleRight = buildToggler('right');
   function buildToggler(navID) {
     var debounceFn =  $mdUtil.debounce(function(){
@@ -53,10 +59,8 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       },200);
     return debounceFn;
   }
-  // $scope.toggleRight();
 
-
-  $scope.showAdvanced = function(ev, date) {
+  $scope.showAdvanced = function(ev, callback) {
     $mdDialog.show({
       controller: DialogController,
       templateUrl: './Templates/dialog1.tmpl.html',
@@ -70,6 +74,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     }, function() {
       $scope.status = 'You cancelled the dialog.';
     });
+    console.log('callback :', callback);
     $scope.date = ev;
     console.log("$scope.date :", $scope.date);
   };
@@ -98,9 +103,9 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       var key = $scope.currentuser;
       $scope.date.info.games[$scope.currentuser] = gameObj;
       console.log('$scope.date.info.games[$scope.currentuser] :', $scope.date.info.games[$scope.currentuser]);
+      $rootScope.update();
     }
   }
-  
 
   var time = [], i, j;
   for(i=7; i<23; i++) {
@@ -123,11 +128,12 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       }
     }
   }
+
   time.pop();
   $scope.timesArray = time;
   $scope.fields = [{field: "Home"}, {field: "Away"}];
 
-  function AppCtrl ( $scope ) {
+  function AppCtrl ($scope) {
     $scope.data = {
       selectedIndex: 0,
       secondLocked:  true,
@@ -150,8 +156,10 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.selectedDate;
 
   $scope.dayClick = function(date) {
-    $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
-    $scope.showAdvanced(date);
+    if (date) {
+      $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
+      $scope.showAdvanced(date);
+    }
   };
   $scope.prevMonth = function(data) {
     $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;

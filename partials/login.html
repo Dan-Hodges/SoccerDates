@@ -1,4 +1,4 @@
-<div ng-controller="sideNavCtrl">
+<div ng-controller="sideNavCtrl" flex>
 	<md-calendar flex layout layout-fill
 	  calendar-direction="direction"
 	  on-prev-month="prevMonth"
@@ -13,7 +13,4 @@
 	  day-tooltip-format="'fullDate'"
 	  day-content="setDayContent">
 	</md-calendar>
-	<div>
-		<h1>{{this.date}}</h1>
-	</div>
 </div>

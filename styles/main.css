@@ -6,4 +6,7 @@
 .contentlistitem {
 	border-top: 0;
 	border-bottom: 0;
+	padding-left: 1em;
+	margin-top: .5em;
+	margin-bottom: .5em;
 }
