@@ -73,7 +73,7 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
           this.myArray.push([]);
         }
         this.dates[currentMonth].push({date: date, info: '', short: simpleDate});
-        this.myArray[this.myArray.length - 1].push({date :date, jsonId:angular.toJson(date), info: {games : {}}});
+        this.myArray[this.myArray.length - 1].push({date :date, jsonId:angular.toJson(date), info: {games : {}, invites: {}}});
         // this.myArray[this.myArray.length - 1].push({date :date, info: {games : {}}});
       }
       // this.fireCal = {[currentMonth]: ngObjFixHack(this.weeks[currentMonth])};

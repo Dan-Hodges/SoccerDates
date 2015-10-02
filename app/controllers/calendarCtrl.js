@@ -1,27 +1,26 @@
 app.controller("calendarCtrl",function(
 $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$mdSidenav,$log,$mdUtil, $location, $rootScope) {
 
-  console.log($rootScope);
-
   $scope.uid = uid;
   var uid = currentAuth.uid;
   var ref = new Firebase("https://soccerdates.firebaseio.com/" + uid);
+  var currentUserObject = new $firebaseObject(ref);
   $scope.unauth = function () {
     console.log("click");
     var ref = new Firebase("https://soccerdates.firebaseio.com/");
     ref.unauth();
     $location.path("/");
   }
-  var currentUserObject = new $firebaseObject(ref);
   $scope.currentuser;
   currentUserObject.$loaded()
     .then(function() {
+      console.log('currentUserObject.$value :', currentUserObject.$value);
       if (currentUserObject.$value) {
         $scope.currentuser = currentUserObject.$value;
+        console.log('$scope.currentuser :', $scope.currentuser);
       } else {
         $scope.currentuser = 'Setup Your Profile';
       }
-      console.log($scope.currentuser);
     })
     .catch(function(err) {
       console.error(err);
@@ -61,6 +60,19 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   }
 
   $scope.showAdvanced = function(ev, callback) {
+    $scope.otherUsers = $scope.users.slice();
+
+    for (var i = 0; i < $scope.otherUsers.length; i++) {
+      if ($scope.otherUsers[i].club === $scope.currentuser) {
+        console.log("match");
+        console.log('i :', i);
+        $scope.otherUsers.splice(i, 1);
+      }
+    }
+    console.log("$scope.currentuser :", $scope.currentuser);
+    console.log("$scope.users :", $scope.users);
+    console.log("$scope.otherUsers :", $scope.otherUsers);
+
     $mdDialog.show({
       controller: DialogController,
       templateUrl: './Templates/dialog1.tmpl.html',
@@ -75,10 +87,12 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       $scope.status = 'You cancelled the dialog.';
     });
     console.log('callback :', callback);
+    // brings in the date from the scope event argument
     $scope.date = ev;
-    console.log("$scope.date :", $scope.date);
+    console.log("ev :", ev);
   };
 
+  console.log("scope.dates :", $scope.dates);
   function DialogController($scope, $mdDialog) {
     $scope.hide = function() {
       $mdDialog.hide();
@@ -94,15 +108,37 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     }
     $scope.addGame = function (ev) {
       console.log("click ");
+      var userVar = $scope.currentuser;
+      var opponentVar = $scope.otherUsers[$scope.otherUsers.length - 1];
+      console.log("opponentVar :", opponentVar);
+      console.log("$scope.otherUsers :", $scope.otherUsers);
+      var timeVar = $scope.timesArray[$scope.timesArray.length -1];
+      var locationVar = $scope.fields[$scope.fields.length -1];
+      var inviteField;
+      if (locationVar === 'Home') {
+        inviteField = 'Away';
+      } else {
+        inviteField = 'Home';
+      }
       var gameObj = {
-        [$scope.currentuser]: $scope.users[$scope.users.length - 1],
-        time: $scope.timesArray[$scope.timesArray.length -1],
-        location : $scope.fields[$scope.fields.length -1]
+        [userVar]: opponentVar,
+        time: timeVar,
+        location : locationVar,
+        status : 'pending'
       };
+      var inviteObj = {
+        [opponentVar]: userVar,
+        time: timeVar,
+        location : locationVar,
+        status : 'pending'
+      }
+      console.log("inviteObj :", inviteObj);
+      $scope.date.info.invites[opponentVar] = inviteObj;
+      $scope.date.info.games[userVar] = gameObj;
+      console.log("inviteObj :", inviteObj);
       console.log("gameObj :", gameObj);
-      var key = $scope.currentuser;
-      $scope.date.info.games[$scope.currentuser] = gameObj;
-      console.log('$scope.date.info.games[$scope.currentuser] :', $scope.date.info.games[$scope.currentuser]);
+      console.log('$scope.date.info.games[userVar] :', $scope.date.info.games[userVar]);
+      console.log('$scope.date.info.invites[opponentVar] :', $scope.date.info.invites[opponentVar]);
       $rootScope.update();
     }
   }

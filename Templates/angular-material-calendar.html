@@ -24,13 +24,25 @@
         <h3 class="md-display-1">My Invitations</h3>
         <md-list>
           <md-subheader class="md-no-sticky">3 line item</md-subheader>
-          <md-list-item class="md-3-line" ng-repeat="item in todos">
-            <!-- <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /> -->
-            <div class="md-list-item-text" layout="row">
-              <h3>TEAM</h3>
-              <h4>FIELD TIME</h4>
-            </div>
-          </md-list-item>
+          <!-- <md-list-item class="md-3-line" ng-repeat="item in todos"> -->
+          <span ng-repeat='week in calendar.weeks[calendar.month]'>
+            <!-- <span ng-repeat='day in week' ng-if="day.info.invites[$parent.$parent.$parent.currentuser]"> -->
+            <span ng-repeat='day in week'>
+              <!-- <md-list-item class="md-3-line"> -->
+                <!-- <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /> -->
+                <div class="md-list-item-text" layout="row">
+                <!-- <div class="md-list-item-text" layout="row"> -->
+                  <h5>
+                    {{day.info.invites[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}
+                    {{day.info.invites[$parent.$parent.$parent.currentuser].location}}
+                    {{day.info.invites[$parent.$parent.$parent.currentuser].time}}
+                  </h5> 
+                  <md-button><ng-md-icon icon="thumb_up" size="20"></ng-md-icon></md-button>
+                  <md-button><ng-md-icon icon="thumb_down" size="20"></ng-md-icon></md-button>  
+                </div>
+              <!-- </md-list-item> -->
+            </span>
+          </span>
         </md-list>  
 
         <h3 class="md-display-1">My Team</h3>
