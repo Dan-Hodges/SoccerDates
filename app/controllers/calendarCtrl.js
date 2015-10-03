@@ -91,6 +91,8 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       if (ev.info.games[$scope.currentuser].status) {
         if (ev.info.games[$scope.currentuser].status === 'Waiting Confimation') {
           mdObj.templateUrl = './Templates/dialog2.tmpl.html';
+        } if (ev.info.games[$scope.currentuser].status === 'Invitation Sent') {
+          mdObj.templateUrl = './Templates/dialog3.tmpl.html';
         } else {
           mdObj.templateUrl = './Templates/dialog1.tmpl.html';
         }
