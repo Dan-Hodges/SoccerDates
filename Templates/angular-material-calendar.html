@@ -2,16 +2,15 @@
   
   <md-toolbar>
     <div class='md-toolbar-tools' layout='row'>
-      <md-button class='md-calendar-left-btn' ng-click='prev()'>&laquo;</md-button>
+      <md-button aria-label="Button" class='md-calendar-left-btn' ng-click='prev()'>&laquo;</md-button>
       <h2 class='md-calendar-title' flex><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2>
-      <md-button ng-click="$parent.toggleRight()"
+      <md-button aria-label="button" ng-click="$parent.toggleRight()"
         class="md-calendar" ng-bind="$parent.currentuser">
-        {{$parent.currentuser}}
       </md-button>
-      <md-button class="md-calendar"ng-click="$parent.unauth()" class="md-primary">
+      <md-button aria-label="button" class="md-calendar"ng-click="$parent.unauth()" class="md-primary">
         Log Out
       </md-button>       
-      <md-button class='md-calendar-left-btn' ng-click='next()'>&raquo;</md-button>
+      <md-button aria-label="button" class='md-calendar-left-btn' ng-click='next()'>&raquo;</md-button>
     </div>
   </md-toolbar>
 
@@ -23,24 +22,23 @@
       <form>
         <h3 class="md-display-1">My Invitations</h3>
         <md-list>
-          <md-subheader class="md-no-sticky">3 line item</md-subheader>
-          <!-- <md-list-item class="md-3-line" ng-repeat="item in todos"> -->
           <span ng-repeat='week in calendar.weeks[calendar.month]'>
-            <!-- <span ng-repeat='day in week' ng-if="day.info.invites[$parent.$parent.$parent.currentuser]"> -->
-            <span ng-repeat='day in week'>
-              <!-- <md-list-item class="md-3-line"> -->
-                <!-- <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /> -->
-                <div class="md-list-item-text" layout="row">
-                <!-- <div class="md-list-item-text" layout="row"> -->
-                  <h5>
-                    {{day.info.invites[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}
-                    {{day.info.invites[$parent.$parent.$parent.currentuser].location}}
-                    {{day.info.invites[$parent.$parent.$parent.currentuser].time}}
-                  </h5> 
-                  <md-button><ng-md-icon icon="thumb_up" size="20"></ng-md-icon></md-button>
-                  <md-button><ng-md-icon icon="thumb_down" size="20"></ng-md-icon></md-button>  
-                </div>
-              <!-- </md-list-item> -->
+            <span ng-repeat="day in week">
+              <div class="md-list-item-text" layout="row" 
+              ng-hide="day.info.games[$parent.$parent.$parent.currentuser].status !='Waiting Confimation'">
+              <!-- <div class="md-list-item-text" layout="row"> -->
+                <h5>
+                  {{day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}
+                  {{day.info.games[$parent.$parent.$parent.currentuser].location}}
+                  {{day.info.games[$parent.$parent.$parent.currentuser].time}}
+                </h5> 
+                <md-button aria-label="button" ng-if="day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]">
+                  <ng-md-icon icon="thumb_up" size="20"></ng-md-icon>
+                </md-button>
+                <md-button aria-label="button" ng-if="day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]">
+                  <ng-md-icon icon="thumb_down" size="20"></ng-md-icon>
+                </md-button>  
+              </div>
             </span>
           </span>
         </md-list>  
@@ -54,7 +52,7 @@
           <label for="mascot">Mascot</label>
           <input type="text" id="mascot" ng-model="$parent.mascot" md-autofocus>
         </md-input-container>
-      <md-button ng-click="$parent.close(); $parent.setUser()" class="md-primary">
+      <md-button aria-label="button" ng-click="$parent.close(); $parent.setUser()" class="md-primary">
         Save
       </md-button>
       </form>
@@ -70,21 +68,18 @@
         {{ day.date | date:dayLabelFormat:timezone }}
       </div>
     </div>
-
     <div flex class='md-calendar-month' layout="column">
       <div flex class='md-calendar-week' ng-class='calendarDirection' layout='{{ weekLayout }}' layout-fill ng-repeat='week in calendar.weeks[calendar.month]'>
         <div class='md-calendar-day' ng-hide="! sameMonth(day.date) && weekLayout == columnWeekLayout" ng-class='{"md-calendar-day-inactive" : ! sameMonth(day.date), active: active === day.date }' flex layout layout-fill ng-click='handleDayClick(day); showAdvanced($event)' ng-repeat='day in week' ng-class='{ active: active === day }'>
           <md-tooltip>{{ day.date | date:dayTooltipFormat:timezone }}</md-tooltip>
           <div class='md-calendar-number'>{{ day.date | date:dayFormat:timezone }}</div>
           <div class='md-calendar-content'flex>
-            <!-- <ul class="contentlist" ng-repeat="(key, val) in day.info.games[$parent.$parent.$parent.currentuser]">
-              <li  class="contentlistitem" >{{key}} : {{val}}</li>
-            </ul> -->
             <p flex class="contentlistitem">{{day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}</p>
-            <p flex class="contentlistitem">{{day.info.games[$parent.$parent.$parent.currentuser].location}} 
-            {{day.info.games[$parent.$parent.$parent.currentuser].time}}
+            <p flex class="contentlistitem">
+              {{day.info.games[$parent.$parent.$parent.currentuser].location}} 
+              {{day.info.games[$parent.$parent.$parent.currentuser].time}}
+              {{day.info.games[$parent.$parent.$parent.currentuser].status}}
             </p>
-            <!-- <p class="contentlistitem">{{day.info.games[$parent.$parent.$parent.currentuser].time}}</p> -->
           </div>
         </div>
       </div>

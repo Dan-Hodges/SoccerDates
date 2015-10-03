@@ -163,22 +163,16 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
             $scope.FB = $firebaseObject(ref);
             $scope.FB.$loaded()
               .then(function() {
-                // console.log($scope.FB);
                 for (key in $scope.calendar.weeks[$scope.calendar.month]) {
                   for (key2 in $scope.calendar.weeks[$scope.calendar.month][key]) {
                     var dateId = $scope.calendar.weeks[$scope.calendar.month][key][key2].jsonId;
-                    // console.log("json date :", dateId);
                     var index = $scope.calendar.month;
                     for (i in $scope.FB[index]){   
-                      // console.log("$scope.FB[index][i].date :", JSON.stringify($scope.FB[index][i].date));         
                       if (JSON.stringify($scope.FB[index][i].date) === dateId) {
                         if ($scope.FB[$scope.calendar.month][i].info) {
                           $scope.calendar.weeks[$scope.calendar.month][key][key2].info = angular.copy($scope.FB[$scope.calendar.month][i].info);
                         }
-                        // console.log("$scope.FB[$scope.calendar.month][i].info :", $scope.FB[$scope.calendar.month][i].info)
-                        // console.log("match");
                       } else {
-                        // console.log("no match from fire");
                       }
                     }
                   }

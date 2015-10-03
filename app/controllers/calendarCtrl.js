@@ -124,16 +124,17 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
         [userVar]: opponentVar,
         time: timeVar,
         location : locationVar,
-        status : 'pending'
+        status : 'Invitation Sent'
       };
       var inviteObj = {
         [opponentVar]: userVar,
         time: timeVar,
         location : locationVar,
-        status : 'pending'
+        status : 'Waiting Confimation'
       }
+      console.log("ev :", ev);
       console.log("inviteObj :", inviteObj);
-      $scope.date.info.invites[opponentVar] = inviteObj;
+      $scope.date.info.games[opponentVar] = inviteObj;
       $scope.date.info.games[userVar] = gameObj;
       console.log("inviteObj :", inviteObj);
       console.log("gameObj :", gameObj);
