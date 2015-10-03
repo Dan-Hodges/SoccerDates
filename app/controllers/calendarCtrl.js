@@ -59,7 +59,13 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     return debounceFn;
   }
 
-  $scope.showAdvanced = function(ev, callback) {
+  $scope.dayClickDialog = function(event) {
+    console.log("dayClickDialog");
+  }
+
+  $scope.showAdvanced = function(ev) {
+    $scope.eventObj = ev;
+    console.log('$scope.eventObj :', $scope.eventObj);
     $scope.otherUsers = $scope.users.slice();
 
     for (var i = 0; i < $scope.otherUsers.length; i++) {
@@ -73,20 +79,34 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     console.log("$scope.users :", $scope.users);
     console.log("$scope.otherUsers :", $scope.otherUsers);
 
-    $mdDialog.show({
+    var mdObj = {
       controller: DialogController,
-      templateUrl: './Templates/dialog1.tmpl.html',
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose:true,
       scope: $scope.$new()
-    })
+    }
+
+    if (ev.info.games[$scope.currentuser]) {
+      if (ev.info.games[$scope.currentuser].status) {
+        if (ev.info.games[$scope.currentuser].status === 'Waiting Confimation') {
+          mdObj.templateUrl = './Templates/dialog2.tmpl.html';
+        } else {
+          mdObj.templateUrl = './Templates/dialog1.tmpl.html';
+        }
+      } else {
+        mdObj.templateUrl = './Templates/dialog1.tmpl.html';
+      }
+    } else {
+      mdObj.templateUrl = './Templates/dialog1.tmpl.html';
+    }
+
+    $mdDialog.show(mdObj)
     .then(function(answer) {
       $scope.status = 'You said the information was "' + answer + '".';
     }, function() {
       $scope.status = 'You cancelled the dialog.';
     });
-    console.log('callback :', callback);
     // brings in the date from the scope event argument
     $scope.date = ev;
     console.log("ev :", ev);

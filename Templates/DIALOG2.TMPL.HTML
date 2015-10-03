@@ -1,0 +1,27 @@
+<md-dialog aria-label="Add A Game">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2  class='md-toolbar-tools'>Accept Invitation?</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()"> 
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-content style="min-width:350px">
+    <p ng-bind="date.short">{{date.short}}</p>
+    <div ng-model="eventObj" layout="row">
+      <h5>
+        {{eventObj.info.games[currentuser][currentuser]}}
+        {{eventObj.info.games[currentuser].location}} 
+        {{eventObj.info.games[currentuser].time}}
+      </h5> 
+      <md-button aria-label="button">
+        <ng-md-icon icon="thumb_up" size="20"></ng-md-icon>
+      </md-button>
+      <md-button aria-label="button">
+        <ng-md-icon icon="thumb_down" size="20"></ng-md-icon>
+      </md-button>  
+    </div>
+  </md-content>
+</md-dialog>
