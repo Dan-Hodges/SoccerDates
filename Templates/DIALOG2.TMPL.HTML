@@ -16,10 +16,10 @@
         {{eventObj.info.games[currentuser].location}} 
         {{eventObj.info.games[currentuser].time}}
       </h5> 
-      <md-button aria-label="button">
+      <md-button aria-label="button" ng-click="thumbUpAccept(eventObj); cancel()">
         <ng-md-icon icon="thumb_up" size="20"></ng-md-icon>
       </md-button>
-      <md-button aria-label="button">
+      <md-button aria-label="button" ng-click="thumbDownReject(eventObj); cancel()">
         <ng-md-icon icon="thumb_down" size="20"></ng-md-icon>
       </md-button>  
     </div>

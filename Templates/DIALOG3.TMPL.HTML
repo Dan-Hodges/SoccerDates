@@ -1,7 +1,7 @@
 <md-dialog aria-label="Add A Game">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2  class='md-toolbar-tools'>Accept Invitation?</h2>
+      <h2  class='md-toolbar-tools'>Cancel Invitation?</h2>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="cancel()"> 
       </md-button>
@@ -12,13 +12,10 @@
     <p ng-bind="date.short">{{date.short}}</p>
     <div ng-model="eventObj" layout="row">
       <h5>
-        Cancel Invitation?
+        Are you sure you want to cancel this invitation?
       </h5> 
-      <md-button aria-label="button">
-        <ng-md-icon icon="thumb_up" size="20"></ng-md-icon>
-      </md-button>
-      <md-button aria-label="button">
-        <ng-md-icon icon="thumb_down" size="20"></ng-md-icon>
+      <md-button aria-label="button" ng-click="thumbDownReject(eventObj); cancel()">
+        <ng-md-icon icon="remove_circle_outline" size="20"></ng-md-icon>
       </md-button>  
     </div>
   </md-content>

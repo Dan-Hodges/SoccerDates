@@ -31,11 +31,12 @@
                   {{day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}
                   {{day.info.games[$parent.$parent.$parent.currentuser].location}}
                   {{day.info.games[$parent.$parent.$parent.currentuser].time}}
+                  {{day.info.games[$parent.$parent.$parent.currentuser].short}}
                 </h5> 
-                <md-button aria-label="button" ng-if="day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]">
+                <md-button aria-label="button" ng-if="day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]" ng-click="$parent.$parent.$parent.$parent.thumbUpAccept(day)">
                   <ng-md-icon icon="thumb_up" size="20"></ng-md-icon>
                 </md-button>
-                <md-button aria-label="button" ng-if="day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]">
+                <md-button aria-label="button" ng-if="day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]" ng-click="$parent.$parent.$parent.$parent.thumbDownReject(day)">
                   <ng-md-icon icon="thumb_down" size="20"></ng-md-icon>
                 </md-button>  
               </div>
