@@ -19,6 +19,7 @@
               <label>Opponent</label>
               <md-select multiple='true' ng-model="otherUsers" style="margin: 5px;">
                 <md-option ng-repeat="user in otherUsers track by $index">{{user.club}}</md-option>
+                <!-- <md-option ng-repeat="user in otherUsers track by $index">{{user.club}}</md-option> -->
               </md-select>
             </md-input-container>
             <md-input-container>
@@ -39,9 +40,11 @@
         </md-tab-body>
       </md-tab>
       <md-tab id="tab3">
-        <md-tab-label>view Games</md-tab-label>
+        <md-tab-label>View Games</md-tab-label>
         <md-tab-body>
-          <!-- <div ng-repeat= "team in "></div> -->
+          <div ng-repeat= "(key, val) in alreadyPlaying">
+            
+          </div>
         </md-tab-body>
       </md-tab>
     </md-tabs>

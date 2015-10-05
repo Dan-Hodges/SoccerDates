@@ -1,25 +1,78 @@
-.contentlist {
-	list-style-type: none;
-	padding-left: 1em;
-	padding-top: 0;
+md-calendar {
+
+  display: block;
+  max-height: 100%;
+
+  .md-calendar-subheader {
+    min-height: 36px;
+  }
+
+  .md-calendar-day{
+    border-bottom: $md-calendar-border;
+    border-right: $md-calendar-border;
+    padding: 6px;
+    min-height: 48px;
+    box-sizing: border-box;
+  }
+
+  .md-calendar-subheader-day, .md-calendar-day {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .md-calendar-subheader {
+    border-left: $md-calendar-border;
+    border-right: $md-calendar-border;
+  }
+
+  .md-calendar-week:first-child,
+  .md-calendar-month:first-child .md-calendar-day {
+    border-top: $md-calendar-border;
+  }
+
+  .md-calendar-day:not(.md-calendar-day-inactive) {
+    cursor: pointer;
+  }
+  .md-calendar-day-inactive {
+    color: rgba(0, 0, 0, .3);
+    pointer-events: none;
+    .md-calendar-number {
+      color: inherit;
+    }
+  }
+
+  .md-subheader {
+    border-left: $md-calendar-border;
+    border-right: $md-calendar-border;
+    margin-right: 0;
+  }
+
+  .md-calendar-day.active {
+    background-color: $md-calendar-background-active;
+  }
+
+  .md-subheader:not(.md-sticky-no-effect):after {
+    right: 0 !important;
+  }
+
+  .md-calendar-week.vertical,
+  .md-calendar-week.horizontal .md-calendar-day:first-child {
+    border-left: $md-calendar-border;
+  }
+
+  .md-calendar-week .md-calendar-day:last-child {
+  }
+
+  .md-calendar-day:hover {
+    background: $md-calendar-background-hover;
+  }
+
+  .md-calendar-number {
+    padding: 0;
+  }
+
+  .md-calendar-content {
+
+  }
+
 }
-.contentlistitem {
-	border-top: 0;
-	border-bottom: 0;
-	padding-left: 1em;
-	margin-top: .5em;
-	margin-bottom: .5em;
-}
-.dialogdemoBasicUsage #popupContainer {
-  position: relative; }
-.dialogdemoBasicUsage .debt-be-gone {
-  font-weight: bold;
-  color: blue;
-  text-decoration: underline; }
-.dialogdemoBasicUsage .footer {
-  width: 100%;
-  text-align: center;
-  margin-left: 20px; }
-.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
-  font-size: 0.8em;
-  margin-top: 50px; }

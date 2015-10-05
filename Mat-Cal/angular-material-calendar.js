@@ -73,7 +73,7 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
           this.myArray.push([]);
         }
         this.dates[currentMonth].push({date: date, info: '', short: simpleDate});
-        this.myArray[this.myArray.length - 1].push({date :date, jsonId:angular.toJson(date), info: {games : {}, invites: {}}});
+        this.myArray[this.myArray.length - 1].push({date :date, jsonId:angular.toJson(date), info: {games : {}}});
         // this.myArray[this.myArray.length - 1].push({date :date, info: {games : {}}});
       }
       // this.fireCal = {[currentMonth]: ngObjFixHack(this.weeks[currentMonth])};
@@ -191,7 +191,7 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
             var date = $scope.calendar.weeks[$scope.calendar.month][key][key2].date;
             for (var i in $scope.calendar.dates[$scope.calendar.month]){          
               if ($scope.calendar.dates[$scope.calendar.month][i].date === date) {
-                console.log("if has come");
+                // console.log("if has come");
                 $scope.calendar.dates[$scope.calendar.month][i].info = angular.copy($scope.calendar.weeks[$scope.calendar.month][key][key2].info);
                 $scope.calendar.weeks[$scope.calendar.month][key][key2].short = $scope.calendar.dates[$scope.calendar.month][i].short;
               }  
@@ -242,7 +242,7 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
 
       $scope.next = function () {
         $scope.calendar.next();
-        console.log("$scope.calendar :", $scope.calendar);
+        // console.log("$scope.calendar :", $scope.calendar);
         $scope.downFromFire();
         var data = {
           year: $scope.calendar.year,
@@ -261,7 +261,7 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
       $scope.handleDayClick = function (date) {
         $scope.active = date;
         if ($scope.templateUrl === defaultTemplate) {
-          console.log("$scope.template === defaultTemplate");
+          // console.log("$scope.template === defaultTemplate");
           $scope.weeksToDates();
           $scope.datesUpToFire();
           $scope.downFromFire();
@@ -271,7 +271,7 @@ angular.module("materialCalendar", ["ngMaterial", "ngSanitize"])
           }
           handleCb($scope.onDayClick, date);
           // sync();
-          console.log('$scope.calendar :', $scope.calendar);
+          // console.log('$scope.calendar :', $scope.calendar);
         }
       };
 

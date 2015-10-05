@@ -71,7 +71,7 @@
     </div>
     <div flex class='md-calendar-month' layout="column">
       <div flex class='md-calendar-week' ng-class='calendarDirection' layout='{{ weekLayout }}' layout-fill ng-repeat='week in calendar.weeks[calendar.month]'>
-        <div class='md-calendar-day' ng-hide="! sameMonth(day.date) && weekLayout == columnWeekLayout" ng-class='{"md-calendar-day-inactive" : ! sameMonth(day.date), active: active === day.date }' flex layout layout-fill ng-click='handleDayClick(day); showAdvanced($event); dayClickDialog($event)' ng-repeat='day in week' ng-class='{ active: active === day }'>
+        <div class='md-calendar-day' ng-hide="! sameMonth(day.date) && weekLayout == columnWeekLayout" ng-class='{"md-calendar-day-inactive" : ! sameMonth(day.date), active: active === day.date }' flex layout layout-fill ng-click='handleDayClick(day); showAdvanced($event); dayClickDialog($event)' ng-repeat='day in week' ng-class='{ active: active === day }'ng-style='$parent.$parent.$parent.set_color(day)'>
           <md-tooltip>{{ day.date | date:dayTooltipFormat:timezone }}</md-tooltip>
           <div class='md-calendar-number'>{{ day.date | date:dayFormat:timezone }}</div>
           <div class='md-calendar-content'flex>
