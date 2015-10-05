@@ -9,44 +9,32 @@
   </md-toolbar>
 
   <md-content class="md-padding" style="min-width:350px">
-    <md-tabs md-selected="data.selectedIndex" md-align-tabs="data.bottom ? 'bottom' : 'top'}}">
-      <md-tab id="tab1">
-        <md-tab-label>Add Game</md-tab-label>
-        <md-tab-body>
-          <div layout="row" class="md-padding" layout="row" layout-sm="column" layout-align="left center"
-         style="padding-top: 0;">
-            <md-input-container>
-              <label>Opponent</label>
-              <md-select multiple='true' ng-model="otherUsers" style="margin: 5px;">
-                <md-option ng-repeat="user in otherUsers track by $index">{{user.club}}</md-option>
-                <!-- <md-option ng-repeat="user in otherUsers track by $index">{{user.club}}</md-option> -->
-              </md-select>
-            </md-input-container>
-            <md-input-container>
-              <label>Time</label >
-              <md-select multiple='true'ng-model="timesArray" style="margin: 5px;">
-                <md-option  multiple='false'  ng-repeat="time in timesArray track by $index">{{time.time}}</md-option>
-              </md-select>
-            </md-input-container>
-            <md-input-container>
-              <label>Field</label>
-              <md-select multiple='true' ng-model="fields" style="margin: 5px;">
-                <md-option ng-repeat="field in fields track by $index">{{field.field}}</md-option>                 
-              </md-select>
-          </div>
-          <div class="md-actions" style="text-align:left">
-            <md-button ng-click="cancel(); addGame(date)">Add to Schedule</md-button>
-          </div>
-        </md-tab-body>
-      </md-tab>
-      <md-tab id="tab3">
-        <md-tab-label>View Games</md-tab-label>
-        <md-tab-body>
-          <div ng-repeat= "(key, val) in alreadyPlaying">
-            
-          </div>
-        </md-tab-body>
-      </md-tab>
-    </md-tabs>
+    <h2>Add Game</h2>
+    <div>
+      <div layout="row" class="md-padding" layout="row" layout-sm="column" layout-align="left center"
+     style="padding-top: 0;">
+        <md-input-container>
+          <label>Opponent</label>
+          <md-select multiple='true' ng-model="otherUsers" style="margin: 5px;">
+            <md-option ng-repeat="user in otherUsers track by $index">{{user.club}}</md-option>
+            <!-- <md-option ng-repeat="user in otherUsers track by $index">{{user.club}}</md-option> -->
+          </md-select>
+        </md-input-container>
+        <md-input-container>
+          <label>Time</label >
+          <md-select multiple='true'ng-model="timesArray" style="margin: 5px;">
+            <md-option  multiple='false'  ng-repeat="time in timesArray track by $index">{{time.time}}</md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container>
+          <label>Field</label>
+          <md-select multiple='true' ng-model="fields" style="margin: 5px;">
+            <md-option ng-repeat="field in fields track by $index">{{field.field}}</md-option>                 
+          </md-select>
+      </div>
+      <div class="md-actions" style="text-align:left">
+        <md-button ng-click="cancel(); addGame(date)">Add to Schedule</md-button>
+      </div>
+    </div>
   </md-content>
 </md-dialog>

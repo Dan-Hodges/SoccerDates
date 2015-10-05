@@ -235,7 +235,6 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.verticalDirection = false;
   var directionCounter = 0;
   $scope.setDirection = function() {
-    console.log('click');
     if (directionCounter % 2 === 0) {
       $scope.direction = 'vertical';
       $scope.verticalDirection = true;
@@ -245,6 +244,20 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     }
     directionCounter += 1;
   };
+
+  $scope.viewAll = false;
+  var viewAllCounter = 0;
+  $scope.setViewAll = function() {
+    if (viewAllCounter % 2 === 0) {
+      $scope.verticalDirection = true;
+    } else {
+      $scope.verticalDirection = false;
+    }
+    viewAllCounter += 1;
+  };
+
+
+
 
   $scope.selectedDate;
 
