@@ -232,14 +232,18 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   }  
 
   $scope.selectedDate = null;
-  var myCounter = 1;
+  $scope.verticalDirection = false;
+  var directionCounter = 0;
   $scope.setDirection = function() {
-    myCounter += 1;
-    if (myCounter % 2 === 0) {
+    console.log('click');
+    if (directionCounter % 2 === 0) {
       $scope.direction = 'vertical';
+      $scope.verticalDirection = true;
     } else {
       $scope.direction = 'horizontal';
+      $scope.verticalDirection = false;
     }
+    directionCounter += 1;
   };
 
   $scope.selectedDate;
