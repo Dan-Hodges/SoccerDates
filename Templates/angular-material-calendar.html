@@ -6,12 +6,20 @@
       <h2 class='md-calendar-title' flex>
         <span>{{ calendar.start | date:titleFormat:timezone }}</span>
       </h2>
-        <md-button  ng-if="$parent.verticalDirection==false" aria-label="button" class="md-calendar"ng-click="$parent.$parent.setDirection()" class="md-primary">
-          <ng-md-icon icon="more_vert" size="20"></ng-md-icon>
-        </md-button>  
-        <md-button  ng-if="$parent.verticalDirection==true" aria-label="button" class="md-calendar"ng-click="$parent.$parent.setDirection()" class="md-primary">
-          <ng-md-icon icon="more_horiz" size="20"></ng-md-icon>
-        </md-button> 
+      <md-button  ng-if="$parent.verticalDirection==false" aria-label="button" class="md-calendar"ng-click="$parent.$parent.setDirection()" class="md-primary">
+        <ng-md-icon icon="more_vert" size="20"></ng-md-icon>
+      </md-button>  
+      <md-button  ng-if="$parent.verticalDirection==true" aria-label="button" class="md-calendar"ng-click="$parent.$parent.setDirection()" class="md-primary">
+        <ng-md-icon icon="more_horiz" size="20"></ng-md-icon>
+      </md-button> 
+
+      <md-button  ng-if="$parent.viewAll==false" aria-label="button" class="md-calendar"ng-click="$parent.$parent.setViewAll()" class="md-primary">
+        <ng-md-icon icon="group" size="20"></ng-md-icon>
+      </md-button>  
+      <md-button  ng-if="$parent.viewAll==true" aria-label="button" class="md-calendar"ng-click="$parent.$parent.setViewAll()" class="md-primary">
+        <ng-md-icon icon="person" size="20"></ng-md-icon>
+      </md-button> 
+
       <md-button aria-label="button" ng-click="$parent.toggleRight()"
         class="md-calendar" ng-bind="$parent.currentuser">
       </md-button>
@@ -60,7 +68,7 @@
           <label for="mascot">Mascot</label>
           <input type="text" id="mascot" ng-model="$parent.mascot" md-autofocus>
         </md-input-container>
-      <md-button aria-label="button" ng-click="$parent.close(); $parent.setUser()" class="md-primary">
+      <md-button aria-label="button" ng-click="$parent.close(); $parent.setUser()" class="md-primary" >
         Save
       </md-button>
       </form>
@@ -82,12 +90,16 @@
           <md-tooltip>{{ day.date | date:dayTooltipFormat:timezone }}</md-tooltip>
           <div class='md-calendar-number'>{{ day.date | date:dayFormat:timezone }}</div>
           <div class='md-calendar-content'flex>
-            <p flex class="contentlistitem">
+            <p flex class="contentlistitem" ng-hide="$parent.$parent.$parent.viewAll">
               {{day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}<br>
               {{day.info.games[$parent.$parent.$parent.currentuser].location}} 
               {{day.info.games[$parent.$parent.$parent.currentuser].time}}
               {{day.info.games[$parent.$parent.$parent.currentuser].status}}
             </p>
+          <div ng-repeat='user in $parent.$parent.$parent.users' ng-show="$parent.$parent.$parent.$parent.viewAll">
+            <p ng-if="day.info.games[user.club][user.club]">{{user.club}}  v. {{day.info.games[user.club][user.club]}}</p>
+          </div>
+          </div>
           </div>
         </div>
       </div>

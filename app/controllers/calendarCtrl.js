@@ -32,6 +32,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.users = $firebaseArray(usersRef);
   $scope.users.$loaded()
     .then(function(){
+      console.log($scope.users);
     });
   $scope.setUser = function () {
     $scope.currentuser = $scope.club;
@@ -248,10 +249,13 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   $scope.viewAll = false;
   var viewAllCounter = 0;
   $scope.setViewAll = function() {
+    console.log('setViewAll');
     if (viewAllCounter % 2 === 0) {
-      $scope.verticalDirection = true;
+      $scope.viewAll = true;
+      console.log('$scope.viewAll = true');
     } else {
-      $scope.verticalDirection = false;
+      $scope.viewAll = false;
+      console.log('$scope.viewAll = false');
     }
     viewAllCounter += 1;
   };
@@ -263,6 +267,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
 
   $scope.dayClick = function(date) {
     if (date) {
+      console.log(date);
       $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
       $scope.alreadyPlaying = Object.getOwnPropertyNames(date.info.games);
       $scope.showAdvanced(date);
