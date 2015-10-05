@@ -1,0 +1,26 @@
+<md-dialog aria-label="Add A Game">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2  class='md-toolbar-tools'>
+        <ng-md-icon icon="warning"></ng-md-icon>
+          Warning!
+        <ng-md-icon icon="warning"></ng-md-icon>
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()"> 
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-content style="min-width:350px">
+    <p ng-bind="date.short">{{date.short}}</p>
+    <div ng-model="eventObj" layout="row">
+      <h5>
+        Are you sure you want to cancel this Game?
+      </h5> 
+      <md-button aria-label="button" ng-click="thumbDownReject(eventObj); cancel()">
+        Delete
+      </md-button>  
+    </div>
+  </md-content>
+</md-dialog>

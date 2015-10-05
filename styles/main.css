@@ -1,3 +1,6 @@
+.contentlistitem {
+  padding-left: 10px;
+}
 md-calendar {
 
   display: block;

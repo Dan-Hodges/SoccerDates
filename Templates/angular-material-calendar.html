@@ -3,13 +3,18 @@
   <md-toolbar>
     <div class='md-toolbar-tools' layout='row'>
       <md-button aria-label="Button" class='md-calendar-left-btn' ng-click='prev()'>&laquo;</md-button>
-      <h2 class='md-calendar-title' flex><span>{{ calendar.start | date:titleFormat:timezone }}</span></h2>
+      <h2 class='md-calendar-title' flex>
+        <span>{{ calendar.start | date:titleFormat:timezone }}</span>
+      </h2>
+        <md-button aria-label="button" class="md-calendar"ng-click="$parent.setDirection()" class="md-primary">
+          <ng-md-icon icon="rotate_right" size="20"></ng-md-icon>
+        </md-button>       
       <md-button aria-label="button" ng-click="$parent.toggleRight()"
         class="md-calendar" ng-bind="$parent.currentuser">
       </md-button>
       <md-button aria-label="button" class="md-calendar"ng-click="$parent.unauth()" class="md-primary">
         Log Out
-      </md-button>       
+      </md-button> 
       <md-button aria-label="button" class='md-calendar-left-btn' ng-click='next()'>&raquo;</md-button>
     </div>
   </md-toolbar>
@@ -75,8 +80,8 @@
           <md-tooltip>{{ day.date | date:dayTooltipFormat:timezone }}</md-tooltip>
           <div class='md-calendar-number'>{{ day.date | date:dayFormat:timezone }}</div>
           <div class='md-calendar-content'flex>
-            <p flex class="contentlistitem">{{day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}</p>
             <p flex class="contentlistitem">
+              {{day.info.games[$parent.$parent.$parent.currentuser][$parent.$parent.$parent.currentuser]}}<br>
               {{day.info.games[$parent.$parent.$parent.currentuser].location}} 
               {{day.info.games[$parent.$parent.$parent.currentuser].time}}
               {{day.info.games[$parent.$parent.$parent.currentuser].status}}

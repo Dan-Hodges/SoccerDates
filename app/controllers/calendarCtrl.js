@@ -68,17 +68,6 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     $scope.alreadyPlaying = Object.getOwnPropertyNames(ev.info.games);
     $scope.otherUsers = $scope.users.slice();
 
-    for (var i = 0; i < $scope.otherUsers.length; i++) {
-      if ($scope.otherUsers[i].club === $scope.currentuser) {
-        $scope.otherUsers.splice(i, 1);
-      } else {
-        for (var z = 0; z < $scope.alreadyPlaying.length; z++) {
-          if ($scope.otherUsers[i].club === $scope.alreadyPlaying[z]) {
-            $scope.otherUsers.splice(i, 1);
-          }
-        }
-      }
-    };
 
     var mdObj = {
       controller: DialogController,
@@ -94,6 +83,8 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
           mdObj.templateUrl = './Templates/dialog2.tmpl.html';
         } else if (ev.info.games[$scope.currentuser].status === 'Invitation Sent') {
           mdObj.templateUrl = './Templates/dialog3.tmpl.html';
+        } else if (ev.info.games[$scope.currentuser].status === 'Confirmed') {
+          mdObj.templateUrl = './Templates/dialog4.tmpl.html';          
         } else {
           mdObj.templateUrl = './Templates/dialog1.tmpl.html';
         }
@@ -102,6 +93,20 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       }
     } else {
       mdObj.templateUrl = './Templates/dialog1.tmpl.html';
+    };
+
+    if (mdObj.templateUrl === './Templates/dialog1.tmpl.html') {
+      for (var i = 0; i < $scope.otherUsers.length; i++) {
+        if ($scope.otherUsers[i].club === $scope.currentuser) {
+          $scope.otherUsers.splice(i, 1);
+        } else {
+          for (var z = 0; z < $scope.alreadyPlaying.length; z++) {
+            if ($scope.otherUsers[i].club === $scope.alreadyPlaying[z]) {
+              $scope.otherUsers.splice(i, 1);
+            }
+          }
+        }
+      }
     };
 
     $mdDialog.show(mdObj)
@@ -123,8 +128,8 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
 
   $scope.thumbUpAccept = function (data) {
     var opponent = data.info.games[$scope.currentuser][$scope.currentuser];
-    data.info.games[$scope.currentuser].status = 'confirmed';
-    data.info.games[opponent].status = 'confirmed';
+    data.info.games[$scope.currentuser].status = 'Confirmed';
+    data.info.games[opponent].status = 'Confirmed';
     $rootScope.update();
   };
 
@@ -138,7 +143,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
         if (status === 'Waiting Confimation') {
           return {background: "#F50057" };
         }
-        if (status === 'confirmed') {
+        if (status === 'Confirmed') {
           return {background: "#C5CAE9" };
         }
       } else {return null};
@@ -227,8 +232,14 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
   }  
 
   $scope.selectedDate = null;
-  $scope.setDirection = function(direction) {
-    $scope.direction = direction;
+  var myCounter = 1;
+  $scope.setDirection = function() {
+    myCounter += 1;
+    if (myCounter % 2 === 0) {
+      $scope.direction = 'vertical';
+    } else {
+      $scope.direction = 'horizontal';
+    }
   };
 
   $scope.selectedDate;
