@@ -1,0 +1,25 @@
+{
+  "name": "CalTest",
+  "version": "0.0.0",
+  "authors": [
+    "Dan-Hodges <dhdgs690@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-material": "~0.11.0",
+    "angular-route": "~1.4.6",
+    "angularfire": "~1.1.2",
+    "firebase": "~2.2.9",
+    "jquery": "~2.1.4",
+    "lodash": "~3.10.1",
+    "material-calendar": "~0.2"
+  }
+}
