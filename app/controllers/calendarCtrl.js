@@ -182,7 +182,7 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
       var inviteObj = {
         [opponentVar]: userVar,
         time: timeVar,
-        location : inviteField,
+        location : locationVar,
         status : 'Waiting Confimation'
       }
       $scope.date.info.games[opponentVar] = inviteObj;
@@ -259,6 +259,9 @@ $scope,currentAuth, $firebaseObject,$firebaseArray,$filter,$mdDialog,$timeout,$m
     }
     viewAllCounter += 1;
   };
+
+
+
 
   $scope.selectedDate;
 

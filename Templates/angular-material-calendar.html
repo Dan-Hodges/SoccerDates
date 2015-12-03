@@ -97,9 +97,7 @@
               {{day.info.games[$parent.$parent.$parent.currentuser].status}}
             </p>
           <div ng-repeat='user in $parent.$parent.$parent.users' ng-show="$parent.$parent.$parent.$parent.viewAll">
-            <p flex class="contentlistitem" ng-if="day.info.games[user.club][user.club]" ng-hide='day.info.games[user.club].location=="Home"'>
-              {{user.club}} v {{day.info.games[user.club][user.club]}}
-            </p>
+            <p ng-if="day.info.games[user.club][user.club]">{{user.club}}  v. {{day.info.games[user.club][user.club]}}</p>
           </div>
           </div>
           </div>
