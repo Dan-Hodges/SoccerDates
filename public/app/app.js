@@ -1,7 +1,5 @@
 var app = angular.module("soccerDates", ["ngRoute", "ngMaterial", "materialCalendar", "firebase", 'ngMdIcons']);
 
-alert("To see a demo, login with \n TCA@TCA.com pass \n write permissions have been disabled.");
-
 app.run(["$rootScope", "$location", function($rootScope, $location) {
   $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
     // We can catch the error thrown when the $requireAuth promise is rejected
