@@ -40,9 +40,10 @@ To view this application and its code, run:
 * cd Lib `Bower install`
 * If prompted to select a angular-material version, make sure to choose 0.10.1 or the option that is required by CalTest.
 
-## Serving
+## Serving & Use
 
 * From your project directory, run your prefered HTTP server (ex. python -m SimpleHTTPServer).
+* Login with username tca@tca.com password pass.
 
 ## Contact
 
