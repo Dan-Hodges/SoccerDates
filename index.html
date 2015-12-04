@@ -4,11 +4,14 @@
 	<title>
 		Calendar Test
 	</title>
-	<link rel="stylesheet" type="text/css" href="./lib/bower_components/angular-material/angular-material.css">
+
 	<link rel="stylesheet" type="text/css" href="./lib/bower_components/angular-material-icons/angular-material-icons.css">
+	<link rel="stylesheet" type="text/css" href="./lib/bower_components/angular-material/angular-material.css">
 	<link rel="stylesheet" type="text/css" href="./lib/modified-material-calendar/angular-material-calendar.css">
 	<link rel="stylesheet" type="text/css" href="./styles/main.css">
+
 </head>
+
 <body ng-app="soccerDates">
   <div ng-view></div>
 
@@ -23,10 +26,22 @@
 <script src="./lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="./lib/bower_components/firebase/firebase.js"></script>
 <script src="./lib/bower_components/angularfire/dist/angularfire.js"></script>
+
+
+<!-- calendar -->
+<script src="./app/cal.js"></script>
+<script src="./app/cal.filter.js"></script>
+<script src="./app/cal.directive.js"></script>
+<script src="./app/cal.service.js"></script>
+
+<!-- app-->
 <script src="./app/app.js"></script>
-<script src="./app/mat-cal-dir.js"></script>
+<script src="./app/app.config.js"></script>
+<script src="./app/app.run.js"></script>
+
+<script src="./app/factories/authFactory.js"></script>
 <script src="./app/controllers/calendarCtrl.js"></script>
 <script src="./app/controllers/sideNavCtrl.js"></script>
-<script src="./app/factories/authFactory.js"></script>
+
 </body>
 </html>
