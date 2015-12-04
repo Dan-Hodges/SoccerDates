@@ -38,7 +38,7 @@ To view this application and its code, run:
 
 * `git clone https://github.com/dan-hodges/SoccerDates.git`
 * cd Lib `Bower install`
-* If prompted to install a certain version of angular-material, make sure to choose 0.10.1 or the option that is required by CalTest
+* If prompted to select a angular-material version, make sure to choose 0.10.1 or the option that is required by CalTest.
 
 ## Serving
 
