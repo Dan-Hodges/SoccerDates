@@ -12,8 +12,6 @@ it had numberous bugs and zero documentation. In order to make the calendar work
 I had to modify the source code quite substantially. 
 
 ## Known Issues & Notes
-This app is slowly being rewritten
-
 This app is slowly being refactored as time permits to conform to John Papa's Angular Style Guide. During my time NSS, I had two weeks to understand and modify a fairly complex piece of software. 
 Due to my time constraints, several compromises were made.
 
