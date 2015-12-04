@@ -2,7 +2,7 @@
 
 ## About
 
-SoccerDates is an client-side Angular app I build for my front-end capstone. I my previous profession I was a soccer coach.
+SoccerDates is a client-side Angular app I build for my front-end capstone. I my previous profession I was a soccer coach.
 The annual scheduling meeting was a nightmare. SoccerDates is an app that allows users to create an email address and schedule games. 
 All users are automatically added to a league that shows the dates, open and booked, for all other opponents. Features include adding and cancelling games,
 as well as sending and rejecting invitations.
